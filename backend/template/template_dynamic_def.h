@@ -1,0 +1,8 @@
+#ifndef DYNAMIC_DEF_H
+#define DYNAMIC_DEF_H
+
+#define BUFFER_LENGTH 512
+
+// ### AUTOMATIC INSERTION POINT ###
+
+#endif
