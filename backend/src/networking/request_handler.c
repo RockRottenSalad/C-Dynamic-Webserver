@@ -63,10 +63,10 @@ void build_content_response(FILE* client_stream, page_t* page)
             fprintf(client_stream, "%s", buffer);
 
         fclose(file_stream);
-        fprintf(client_stream, "\n</style>\n</head>\n");
+        fprintf(client_stream, "\n</style>\n");
     }
 
-    fprintf(client_stream, "<body>\n");
+    fprintf(client_stream, "</head>\n<body>\n");
     file_stream = fopen(page->HTML, "r");
 
     if(!page->DYNAMIC)
@@ -83,20 +83,24 @@ void build_content_response(FILE* client_stream, page_t* page)
 
 int handle_request(FILE* client_stream, const char* get_request)
 {
+    page_t* page = NULL;
     int ret = 0, status_code = OK_200;
     char* buffer = NULL, *token = NULL; 
 
     buffer = malloc(sizeof(char) * REQ_MAX_LEN);
     ret = regex_nmatch(&regex_container.parse_get, get_request, &buffer, REQ_MAX_LEN);
     if(ret != 0)
+    {
+        free(buffer);
         return ret;
+    }
 
     // buffer = "GET /path/here HTTP/1.1"
     // strtok is used to fetch page path, spaces are guranteed from regex
     token = strtok(buffer, " ");
     token = strtok(NULL, " ");
 
-    page_t* page = pages_hashmap[hash_page(token)];
+    page = pages_hashmap[hash_page(token)];
 
     if(page == NULL)
     {
@@ -104,10 +108,10 @@ int handle_request(FILE* client_stream, const char* get_request)
         page = &error_pages[ERROR_PAGE_404];
     }
 
+    free(buffer);
+
     build_http_response(client_stream, status_code, 0);
     build_content_response(client_stream, page);
-
-    free(buffer);
 
     return 0;
 }

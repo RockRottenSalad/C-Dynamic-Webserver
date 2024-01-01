@@ -17,7 +17,7 @@ typedef struct
 
 extern dynamic_config_t dynamic_config;
 
-static dyn_function_t dyn_function_hashmap[25];
+static dyn_function_t dyn_function_hashmap[100];
 
 void dynamic_ssc_init(int dynamic_tags, int dynamic_functions);
 

@@ -91,7 +91,7 @@ start_server()
     printf "Starting server...\n";
     load_config;
     cd ${BACKEND};
-    make release build;
+    make debug build;
     cd ${DIR};
     ./backend/bin/main;
 }

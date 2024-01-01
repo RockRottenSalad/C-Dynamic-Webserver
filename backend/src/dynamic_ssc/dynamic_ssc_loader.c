@@ -19,10 +19,6 @@ void dynamic_ssc_init(int dynamic_tags, int dynamic_functions)
     int index = 0;
 
 // ### AUTOMATIC INSERTION POINT ###
-index = hash_function("dynamic_plus");
-assert(dyn_function_hashmap[index] == NULL);
-dyn_function_hashmap[index] = dynamic_plus;
-
 index = hash_function("include_file");
 assert(dyn_function_hashmap[index] == NULL);
 dyn_function_hashmap[index] = include_file;
@@ -76,10 +72,13 @@ dyn_function_wrap_t* dynamic_parse(const char* file_path)
             // "actualfunc()"
             token = strtok(NULL, "=");
             func = dyn_function_hashmap[hash_function(token)];
+            printf("PARSING TOKEN %s\n", token);
             assert(func != NULL);
             dynamic_functions[dynamic_function_count].dyn_function_v = func;
             dynamic_functions[dynamic_function_count].dyn_line = line_count;
             memset(dynamic_buffer, 0, sizeof(char));
+            
+            // hack
             ret = regex_nmatch(&regex_container.parse_arg, buffer, &dynamic_buffer, MAX_DYNAMIC_BUFFER);
             if(ret == 0)
             {

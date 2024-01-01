@@ -1,5 +1,5 @@
 
-CC = gcc
+CC = clang
 
 SRC = $(wildcard ./src/**/*.c ./src/*.c)
 LIB = lib
@@ -9,7 +9,7 @@ BIN = bin
 DYN_SRC = $(wildcard ../ssc/*.c)
 
 # 										v compiler warns about variables that are actually being used
-CFLAGS = -m64 -Wall -Wpedantic -Wextra -Wno-unused-variable -march=native -rdynamic -Wno-unused-parameter
+CFLAGS = -m64 -Wall -Wpedantic -Wextra -Wno-unused-variable -march=native -Wno-unused-parameter
 DEBUG_FLAGS = -g
 RELEASE_FLAGS = -O3
 

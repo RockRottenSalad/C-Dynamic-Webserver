@@ -8,7 +8,7 @@
  */
 
 static const int MAX_DYNAMIC_TAGS = 10;
-static const int MAX_DYNAMIC_FUNCTIONS = 25;
+static const int MAX_DYNAMIC_FUNCTIONS = 100;
 
 static page_t pages[10] = 
 {

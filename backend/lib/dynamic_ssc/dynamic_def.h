@@ -4,8 +4,6 @@
 #define BUFFER_LENGTH 512
 
 // ### AUTOMATIC INSERTION POINT ###
-void dynamic_plus(FILE*,char*);
-
 void include_file(FILE*,char*);
 
 void another_dynamic_test(FILE*,char*);

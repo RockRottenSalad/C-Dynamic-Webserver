@@ -16,6 +16,10 @@
 
 void build_http_response(FILE* client_stream, int status_code, int type);
 
+void build_dynamic_content_response(FILE* client_stream, page_t* page, FILE* file_stream);
+
+void build_content_response(FILE* client_stream, page_t* page);
+
 char* build_request(FILE* client_stream, int status_code);
 
 int handle_request(FILE* client_stream, const char* get_request);

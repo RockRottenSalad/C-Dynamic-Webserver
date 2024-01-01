@@ -12,7 +12,7 @@ void server_start(void)
     server.thread_handle = 0;
 
     assert(bind(server.socket, (const struct sockaddr*)&server.info, sizeof(server.info)) == 0);
-    
+
     server.running = true;
     server.listening = false;
 }
@@ -25,10 +25,10 @@ void* server_new_client(void* arg)
 
     FILE* stream;
 
-    char* buffer = malloc(sizeof(char) * GET_BUFFER_LENGTH);
+    char* buffer = (char*)malloc(sizeof(char) * GET_BUFFER_LENGTH);
 
     ssize_t get_size = recv(client, buffer, GET_BUFFER_LENGTH, 0);
-//    printf("\n\nREQUEST: %s\n\n", buffer);
+
     if(get_size <= 0)
     {
         printf("Empty GET request\n");
@@ -51,6 +51,7 @@ void* server_new_client(void* arg)
     fclose(stream);
     close(client);
     free(buffer);
+
     return (void*)0;
 }
 
@@ -69,8 +70,9 @@ void server_listen(void)
         int_ptr = malloc(sizeof(int));
         *int_ptr = server.tmp_client;
         ret = pthread_create(&server.thread_handle, NULL, &server_new_client, (void*)int_ptr);
-        assert( ret == 0 );
-        pthread_detach(server.thread_handle);
+
+        if(ret)
+            pthread_detach(server.thread_handle);
     }
 }
 
